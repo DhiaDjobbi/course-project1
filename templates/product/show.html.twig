@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Product
+{% endblock %}
+
+
+{% block stylesheets %}
+	<style>
+		legend,
+		label {
+			font-weight: bold;
+		}
+	</style>
+{% endblock %}
+
+{% block body %}
+
+
+	<div class="container mt-5 mb-5">
+
+
+		<fieldset>
+			<legend>Product N=
+				{{ product.id }}</legend>
+
+
+			<div class="form-group">
+				<label>Product Name:</label>
+				{{ product.name }}
+			</div>
+
+
+			<div class="form-group">
+				<label>Product price</label>
+				{{ product.price }}
+			</div>
+
+			<div class="form-group">
+				<label>Expire At</label>
+				{{ product.expireAt ? product.expireAt|date('Y-m-d H:i:s') : '' }}
+			</div>
+
+
+			<form method="post" action="{{ path('product_delete', {'id': product.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+				<a href="{{ path('product_index') }}" class="btn btn-info btn-sm">Back to list</a>
+				<a class="btn btn-primary btn-sm" href="{{ path('product_edit', {'id': product.id}) }}">edit</a>
+
+				<input type="hidden" name="_method" value="DELETE">
+				<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ product.id) }}">
+				<button class="btn btn-danger btn-sm">Delete</button>
+			</form>
+
+
+		</fieldset>
+
+
+	</div>
+
+
+{% endblock %}
